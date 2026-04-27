@@ -217,8 +217,8 @@ nav.sc{background:rgba(13,13,13,.95);border-color:var(--grey-line);backdrop-filt
 .demo-bento{display:grid;grid-template-columns:1fr 1fr 1fr;grid-template-rows:auto auto;gap:1px;background:var(--grey-line);border:1px solid var(--grey-line)}
 
 /* Card base */
-.demo-card{background:var(--card);padding:40px;position:relative;overflow:hidden;transition:all .4s cubic-bezier(0.16, 1, 0.3, 1)}
-.demo-card:hover{background:#111;transform:translateY(-6px);box-shadow:0 16px 40px rgba(255,29,37,0.06)}
+.demo-card{background:var(--card);padding:40px;position:relative;overflow:hidden;transition:background .3s}
+.demo-card:hover{background:#111}
 .demo-card-slash{position:absolute;top:-20px;right:-20px;width:2px;height:160px;background:var(--red);transform:rotate(28deg);opacity:.08;transition:opacity .3s}
 .demo-card:hover .demo-card-slash{opacity:.3}
 .demo-card-label{font-weight:700;font-size:10px;letter-spacing:.2em;text-transform:uppercase;color:var(--red);margin-bottom:16px;display:flex;align-items:center;gap:8px}
@@ -582,7 +582,7 @@ footer{border-top:1px solid var(--grey-line);padding:48px 56px;display:flex;just
       <h2 class="s-headline rev d1" style="font-size:clamp(38px,4.5vw,64px);max-width:600px">What VTS actually<br>feels like to use.</h2>
     </div>
 
-    <div class="demo-bento">
+    <div class="demo-bento rev">
 
       <!-- MAIN: Check-in (tall left card) -->
       <div class="demo-card main">
@@ -918,75 +918,6 @@ function pickOpt(el){
   el.classList.add('active');
   el.querySelector('.cp-check').textContent='✓';
 }
-
-// ── DEMO BENTO ANIMATIONS ──
-const demoTl = gsap.timeline({
-  scrollTrigger: {
-    trigger: '.demo-bento',
-    start: 'top 75%'
-  }
-});
-
-demoTl.from('.demo-card', {
-  y: 60,
-  opacity: 0,
-  rotationX: -4,
-  transformPerspective: 1000,
-  duration: 1,
-  stagger: 0.15,
-  ease: 'power3.out'
-})
-.from('.checkin-phone', {
-  y: 40,
-  opacity: 0,
-  duration: 0.8,
-  ease: 'power3.out'
-}, "-=0.8")
-.from('.cp-opt', {
-  y: 10,
-  opacity: 0,
-  scale: 0.96,
-  duration: 0.5,
-  stagger: 0.1,
-  ease: 'back.out(1.2)'
-}, "-=0.5")
-.from('.story-ui', {
-  y: 20,
-  opacity: 0,
-  duration: 0.7,
-  ease: 'power3.out'
-}, "-=0.7")
-.from('.sui-bar', {
-  width: "0%",
-  duration: 1.2,
-  ease: 'power3.out'
-}, "-=0.4")
-.from('.mirror-ui', {
-  y: 20,
-  opacity: 0,
-  duration: 0.7,
-  ease: 'power3.out'
-}, "-=0.9")
-.from('.mirror-question', {
-  opacity: 0,
-  filter: 'blur(5px)',
-  duration: 1.2,
-  ease: 'power2.out'
-}, "-=0.5")
-.from('.j-step', {
-  opacity: 0,
-  y: 20,
-  duration: 0.6,
-  stagger: 0.15,
-  ease: 'power2.out'
-}, "-=0.8")
-.from('.j-connector', {
-  scaleX: 0,
-  transformOrigin: "left center",
-  duration: 0.6,
-  stagger: 0.15,
-  ease: 'power2.out'
-}, "-=0.6");
 
 // ── MIRROR QUESTIONS ──
 const mirrorQs=[
