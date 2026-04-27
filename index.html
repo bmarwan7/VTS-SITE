@@ -358,7 +358,7 @@ footer{border-top:1px solid var(--grey-line);padding:48px 56px;display:flex;just
         <div class="preview-line">He kept going anyway.</div>
         <div class="preview-line">So why are <strong>you</strong> stopping?</div>
         <div class="preview-mini">15-second emotional preview</div>
-        <button class="preview-replay" onclick="playPreview()">Replay</button>
+        <button class="preview-replay" id="previewReplay">Replay</button>
       </div>
     </div>
 
@@ -374,10 +374,10 @@ footer{border-top:1px solid var(--grey-line);padding:48px 56px;display:flex;just
             <div class="cp-tag">VTS · Check in</div>
             <div class="cp-q">What are you carrying<br>right now?</div>
             <div class="cp-opts">
-              <div class="cp-opt active" data-feeling="lost" onclick="pickOpt(this)"><span>Like giving up</span><span class="cp-check">✓</span></div>
-              <div class="cp-opt" data-feeling="not-enough" onclick="pickOpt(this)"><span>Like I'm not enough</span><span class="cp-check"></span></div>
-              <div class="cp-opt" data-feeling="invisible" onclick="pickOpt(this)"><span>Invisible</span><span class="cp-check"></span></div>
-              <div class="cp-opt" data-feeling="pressure" onclick="pickOpt(this)"><span>Under pressure</span><span class="cp-check"></span></div>
+              <div class="cp-opt active" data-feeling="lost" ><span>Like giving up</span><span class="cp-check">✓</span></div>
+              <div class="cp-opt" data-feeling="not-enough" ><span>Like I'm not enough</span><span class="cp-check"></span></div>
+              <div class="cp-opt" data-feeling="invisible" ><span>Invisible</span><span class="cp-check"></span></div>
+              <div class="cp-opt" data-feeling="pressure" ><span>Under pressure</span><span class="cp-check"></span></div>
             </div>
           </div>
         </div>
@@ -413,9 +413,9 @@ footer{border-top:1px solid var(--grey-line);padding:48px 56px;display:flex;just
           <div class="mirror-breath">Sit with this.</div>
         </div>
         <div style="display:flex;gap:8px;margin-top:20px;flex-wrap:wrap">
-          <button onclick="rotateMirror(0)" style="background:#111;border:1px solid #1e1e1e;color:#444;font-family:'Barlow Condensed',sans-serif;font-size:10px;letter-spacing:.1em;text-transform:uppercase;padding:6px 12px;cursor:pointer;transition:all .2s" onmouseover="this.style.borderColor='var(--red)';this.style.color='var(--white)'" onmouseout="this.style.borderColor='#1e1e1e';this.style.color='#444'">Question 1</button>
-          <button onclick="rotateMirror(1)" style="background:#111;border:1px solid #1e1e1e;color:#444;font-family:'Barlow Condensed',sans-serif;font-size:10px;letter-spacing:.1em;text-transform:uppercase;padding:6px 12px;cursor:pointer;transition:all .2s" onmouseover="this.style.borderColor='var(--red)';this.style.color='var(--white)'" onmouseout="this.style.borderColor='#1e1e1e';this.style.color='#444'">Question 2</button>
-          <button onclick="rotateMirror(2)" style="background:#111;border:1px solid #1e1e1e;color:#444;font-family:'Barlow Condensed',sans-serif;font-size:10px;letter-spacing:.1em;text-transform:uppercase;padding:6px 12px;cursor:pointer;transition:all .2s" onmouseover="this.style.borderColor='var(--red)';this.style.color='var(--white)'" onmouseout="this.style.borderColor='#1e1e1e';this.style.color='#444'">Question 3</button>
+          <button data-mirror-index="0" style="background:#111;border:1px solid #1e1e1e;color:#444;font-family:'Barlow Condensed',sans-serif;font-size:10px;letter-spacing:.1em;text-transform:uppercase;padding:6px 12px;cursor:pointer;transition:all .2s" onmouseover="this.style.borderColor='var(--red)';this.style.color='var(--white)'" onmouseout="this.style.borderColor='#1e1e1e';this.style.color='#444'">Question 1</button>
+          <button data-mirror-index="1" style="background:#111;border:1px solid #1e1e1e;color:#444;font-family:'Barlow Condensed',sans-serif;font-size:10px;letter-spacing:.1em;text-transform:uppercase;padding:6px 12px;cursor:pointer;transition:all .2s" onmouseover="this.style.borderColor='var(--red)';this.style.color='var(--white)'" onmouseout="this.style.borderColor='#1e1e1e';this.style.color='#444'">Question 2</button>
+          <button data-mirror-index="2" style="background:#111;border:1px solid #1e1e1e;color:#444;font-family:'Barlow Condensed',sans-serif;font-size:10px;letter-spacing:.1em;text-transform:uppercase;padding:6px 12px;cursor:pointer;transition:all .2s" onmouseover="this.style.borderColor='var(--red)';this.style.color='var(--white)'" onmouseout="this.style.borderColor='#1e1e1e';this.style.color='#444'">Question 3</button>
         </div>
       </div>
 
@@ -728,4 +728,178 @@ function submitEmail(){
 document.getElementById('emailInput').addEventListener('keydown',e=>{if(e.key==='Enter')submitEmail()});
 </script>
 </body>
-</html>
+</html>// ── CHECK-IN INTERACTION ──
+function pickOpt(el){
+  if(!el) return;
+  document.querySelectorAll('.cp-opt').forEach(o=>{
+    o.classList.remove('active');
+    const check=o.querySelector('.cp-check');
+    if(check) check.textContent='';
+  });
+  el.classList.add('active');
+  const activeCheck=el.querySelector('.cp-check');
+  if(activeCheck) activeCheck.textContent='✓';
+
+  const feeling=el.dataset.feeling;
+  if(feeling) applyFeeling(feeling, false);
+}
+window.pickOpt = pickOpt;
+
+// Attach check-in clicks without inline JS
+document.querySelectorAll('.cp-opt').forEach(opt=>{
+  opt.addEventListener('click',()=>pickOpt(opt));
+});
+
+// ── MIRROR QUESTIONS ──
+const mirrorQs=[
+  'If no one was watching — would you still train the same way?',
+  'What would you do today if you knew no one was judging the result?',
+  'Are you playing to prove something — or to become something?'
+];
+function rotateMirror(i){
+  const el=document.getElementById('mirrorQ');
+  if(!el) return;
+  const question=mirrorQs[i] || mirrorQs[0];
+  el.style.opacity='0';
+  el.style.transform='translateY(8px)';
+  setTimeout(()=>{
+    el.textContent=question;
+    el.style.transition='opacity .6s ease,transform .6s ease';
+    el.style.opacity='1';
+    el.style.transform='translateY(0)';
+  },220);
+}
+window.rotateMirror = rotateMirror;
+
+// Attach mirror button clicks without inline JS
+document.querySelectorAll('[data-mirror-index]').forEach(btn=>{
+  btn.addEventListener('click',()=>{
+    rotateMirror(Number(btn.dataset.mirrorIndex));
+  });
+});
+
+// ── EMOTIONAL PREVIEW SEQUENCE ──
+let previewTimers=[];
+function playPreview(){
+  previewTimers.forEach(t=>clearTimeout(t));
+  previewTimers=[];
+  const lines=[...document.querySelectorAll('.preview-line')];
+  if(!lines.length) return;
+
+  lines.forEach((line,i)=>{
+    line.classList.remove('active','out');
+    if(i===0) line.classList.add('active');
+  });
+
+  lines.forEach((line,i)=>{
+    previewTimers.push(setTimeout(()=>{
+      lines.forEach(l=>{
+        l.classList.remove('active');
+        l.classList.add('out');
+      });
+      line.classList.remove('out');
+      line.classList.add('active');
+    }, i*2200));
+  });
+}
+window.playPreview = playPreview;
+
+const previewEl=document.getElementById('emotionalPreview');
+if(previewEl){
+  let previewStarted=false;
+  new IntersectionObserver(entries=>{
+    entries.forEach(e=>{
+      if(e.isIntersecting && !previewStarted){
+        previewStarted=true;
+        playPreview();
+      }
+    });
+  },{threshold:.35}).observe(previewEl);
+}
+
+const previewReplay=document.getElementById('previewReplay');
+if(previewReplay){
+  previewReplay.addEventListener('click',playPreview);
+}
+
+// ── HERO FEELING SELECTOR → DEMO MATCH ──
+const feelingMap={
+  'not-enough':{
+    storyName:"N'Golo Kanté",
+    avatar:"K",
+    headline:'"Too small. Not athletic enough."',
+    text:'Nobody believed he would make it. He heard it for years. What he never did was stop — and became the engine of two Premier League-winning sides.',
+    lesson:'"The ones who doubted him gave him everything he needed."',
+    mirror:'Whose voice do you hear when you tell yourself you are not enough?'
+  },
+  'invisible':{
+    storyName:'Jamie Vardy',
+    avatar:'V',
+    headline:'"Too late. Too small. Too far behind."',
+    text:'He was not chosen early. He was not protected by an academy. He kept working where nobody was watching until the world had no choice.',
+    lesson:'"Being unseen is not the same as being finished."',
+    mirror:'If no one applauded your work for six months, would you still keep building?'
+  },
+  'pressure':{
+    storyName:'Cristiano Ronaldo',
+    avatar:'R',
+    headline:'"Every eye was waiting for him to fail."',
+    text:'The pressure did not disappear. He learned to make it useful. The noise became fuel, not fear.',
+    lesson:'"Pressure is only heavy when you forget who chose this path."',
+    mirror:'Are you afraid of the moment — or afraid of being seen inside it?'
+  },
+  'lost':{
+    storyName:'Sébastien Haller',
+    avatar:'H',
+    headline:'"Football stopped. Life changed."',
+    text:'When everything was taken from him, he had to rebuild more than fitness. He had to rebuild belief.',
+    lesson:'"A comeback starts before anyone else can see it."',
+    mirror:'What part of you is still fighting, even when you think you are done?'
+  }
+};
+
+function applyFeeling(feeling, scrollToDemo=true){
+  const data=feelingMap[feeling];
+  if(!data) return;
+
+  const matchingOpt=document.querySelector(`.cp-opt[data-feeling="${feeling}"]`);
+  if(matchingOpt){
+    document.querySelectorAll('.cp-opt').forEach(o=>{
+      o.classList.remove('active');
+      const check=o.querySelector('.cp-check');
+      if(check) check.textContent='';
+    });
+    matchingOpt.classList.add('active');
+    const check=matchingOpt.querySelector('.cp-check');
+    if(check) check.textContent='✓';
+  }
+
+  const av=document.querySelector('.sui-av');
+  const name=document.querySelector('.sui-name');
+  const headline=document.querySelector('.sui-headline');
+  const text=document.querySelector('.sui-text');
+  const lesson=document.querySelector('.sui-lesson');
+  const mirror=document.getElementById('mirrorQ');
+
+  if(av) av.textContent=data.avatar;
+  if(name) name.textContent=data.storyName;
+  if(headline) headline.textContent=data.headline;
+  if(text) text.textContent=data.text;
+  if(lesson) lesson.textContent=data.lesson;
+  if(mirror) mirror.textContent=data.mirror;
+
+  if(scrollToDemo){
+    document.getElementById('demo')?.scrollIntoView({behavior:'smooth',block:'start'});
+    setTimeout(playPreview,650);
+  }
+}
+window.applyFeeling = applyFeeling;
+
+document.querySelectorAll('.fq-option').forEach(btn=>{
+  btn.addEventListener('click',()=>{
+    document.querySelectorAll('.fq-option').forEach(b=>b.classList.remove('active'));
+    btn.classList.add('active');
+    applyFeeling(btn.dataset.feeling, true);
+  });
+});
+
