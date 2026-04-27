@@ -163,11 +163,50 @@ nav.sc{background:rgba(13,13,13,.95);border-color:var(--grey-line);backdrop-filt
 footer{border-top:1px solid var(--grey-line);padding:48px 56px;display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:24px}.footer-logo{display:block;width:44px;height:30px}.footer-sub{font-family:'Cormorant Garamond',serif;font-style:italic;font-size:14px;color:#222;margin-top:4px}.footer-links{display:flex;gap:28px;list-style:none;flex-wrap:wrap}.footer-links a{font-size:12px;letter-spacing:.1em;text-transform:uppercase;color:#333;text-decoration:none;transition:color .2s}.footer-links a:hover{color:var(--white)}.footer-bottom{width:100%;border-top:1px solid var(--grey-line);padding-top:24px;margin-top:16px;display:flex;justify-content:space-between;font-size:11px;letter-spacing:.08em;text-transform:uppercase;color:#1e1e1e}.footer-bottom em{color:var(--red);font-style:normal}
 @media(max-width:768px){footer{padding:36px 20px;flex-direction:column;align-items:flex-start}.footer-bottom{flex-direction:column;gap:12px}}
 
+
+/* HERO IMPACT UPGRADE */
+.hero-title.impact-title{font-size:clamp(48px,7vw,104px);line-height:.94;margin-bottom:28px}
+.hero-title.impact-title .hti strong{color:var(--red);font-style:italic}
+.hero-sub.impact-sub{font-size:21px;line-height:1.55;color:rgba(255,255,255,.72);max-width:620px;margin-bottom:34px}
+.hero-hook.impact-hook{font-size:18px;color:rgba(255,255,255,.52);margin-bottom:30px}
+.hero-actions{display:flex;align-items:center;justify-content:center;gap:14px;flex-wrap:wrap;opacity:0;transform:translateY(12px)}
+.hero-secondary{font-weight:700;font-size:13px;letter-spacing:.12em;text-transform:uppercase;color:rgba(255,255,255,.55);border:1px solid rgba(255,255,255,.12);background:rgba(255,255,255,.02);padding:18px 34px;text-decoration:none;clip-path:polygon(0 0,calc(100% - 10px) 0,100% 10px,100% 100%,10px 100%,0 calc(100% - 10px));transition:all .2s}
+.hero-secondary:hover{border-color:rgba(255,29,37,.55);color:#fff;background:rgba(255,29,37,.06)}
+.feeling-quick{position:relative;z-index:3;margin-top:34px;opacity:0;transform:translateY(12px)}
+.fq-title{font-size:11px;letter-spacing:.18em;text-transform:uppercase;color:rgba(255,255,255,.34);margin-bottom:12px}
+.fq-options{display:flex;gap:8px;flex-wrap:wrap;justify-content:center;max-width:760px;margin:0 auto}
+.fq-option{background:rgba(255,255,255,.03);border:1px solid rgba(255,255,255,.10);color:rgba(255,255,255,.58);font-family:'Barlow Condensed',sans-serif;font-size:12px;letter-spacing:.11em;text-transform:uppercase;padding:10px 14px;cursor:none;transition:all .2s}
+.fq-option:hover,.fq-option.active{background:rgba(255,29,37,.10);border-color:rgba(255,29,37,.65);color:#fff;transform:translateY(-2px)}
+@media(max-width:768px){
+  .hero-title.impact-title{font-size:clamp(42px,12vw,72px)}
+  .hero-sub.impact-sub{font-size:18px}
+  .hero-actions{flex-direction:column}
+  .hero-btn,.hero-secondary{width:100%;max-width:300px;text-align:center}
+  .fq-options{max-width:340px}
+  .fq-option{cursor:pointer}
+}
+
+/* EMOTIONAL PREVIEW */
+.preview-card{background:#070707;border:1px solid var(--grey-line);padding:0;overflow:hidden;position:relative;margin-bottom:1px}
+.preview-card::before{content:'';position:absolute;inset:0;background:radial-gradient(circle at 50% 50%,rgba(255,29,37,.08),transparent 60%);pointer-events:none}
+.preview-inner{min-height:340px;display:flex;align-items:center;justify-content:center;text-align:center;padding:56px 28px;position:relative}
+.preview-line{position:absolute;max-width:760px;font-family:'Cormorant Garamond',serif;font-style:italic;font-weight:600;font-size:clamp(32px,5.5vw,72px);line-height:1.05;color:var(--white);opacity:0;transform:translateY(18px)}
+.preview-line strong{color:var(--red);font-style:italic}
+.preview-line.active{opacity:1;transform:translateY(0);transition:opacity .7s ease,transform .7s ease}
+.preview-line.out{opacity:0;transform:translateY(-18px);transition:opacity .45s ease,transform .45s ease}
+.preview-mini{position:absolute;bottom:28px;left:50%;transform:translateX(-50%);font-size:10px;letter-spacing:.18em;text-transform:uppercase;color:#2f2f2f}
+.preview-replay{position:absolute;right:24px;bottom:22px;background:transparent;border:1px solid #222;color:#555;font-family:'Barlow Condensed',sans-serif;font-weight:700;font-size:10px;letter-spacing:.14em;text-transform:uppercase;padding:8px 12px;cursor:none;transition:all .2s}
+.preview-replay:hover{border-color:var(--red);color:#fff}
+@media(max-width:768px){
+  .preview-inner{min-height:300px}
+  .preview-replay{cursor:pointer;right:16px;bottom:16px}
+}
+
 /* MOBILE CURSOR FIX */
 @media (max-width:768px){
   body{cursor:auto}
   #cur,#curT{display:none}
-  a,button,.fr,.stat-card,.demo-card,.nc,.how-card{cursor:pointer}
+  a,button,.fr,.stat-card,.demo-card,.nc,.how-card,.fq-option,.preview-replay{cursor:pointer}
 }
 </style>
 </head>
@@ -207,18 +246,34 @@ footer{border-top:1px solid var(--grey-line);padding:48px 56px;display:flex;just
 
   <div class="hero-content">
     <div class="hero-eyebrow" id="hEyebrow">Vic To Succeed</div>
-    <h1 class="hero-title" id="hTitle">
-      <span class="htl"><span class="hti">The footballer</span></span>
-      <span class="htl"><span class="hti">who understands</span></span>
-      <span class="htl"><span class="hti">himself wins.</span></span>
+    <h1 class="hero-title impact-title" id="hTitle">
+      <span class="htl"><span class="hti">You finished training.</span></span>
+      <span class="htl"><span class="hti">But something is <strong>wrong.</strong></span></span>
     </h1>
-    <p class="hero-sub" id="hSub">
-      After the worst session of your life.<br>
-      Alone. Quiet. Angry at yourself.<br>
-      VTS helps you understand what you are carrying.
+    <p class="hero-sub impact-sub" id="hSub">
+      Not your legs.<br>
+      Your head.<br>
+      And no one sees it.
     </p>
-    <p class="hero-hook" id="hHook">A three-minute football story matched to how you feel right now.</p>
-    <a href="#waitlist" class="hero-btn" id="heroBtn">Join the waitlist →</a>
+    <p class="hero-hook impact-hook" id="hHook">
+      This is where most players lose. Not physically. Mentally.
+    </p>
+
+    <div class="hero-actions" id="heroActions">
+      <a href="#demo" class="hero-btn" id="heroBtn">Enter the experience →</a>
+      <a href="#waitlist" class="hero-secondary">Join the waitlist</a>
+    </div>
+
+    <div class="feeling-quick" id="feelingQuick">
+      <div class="fq-title">What are you carrying right now?</div>
+      <div class="fq-options">
+        <button class="fq-option" data-feeling="not-enough">I’m not enough</button>
+        <button class="fq-option" data-feeling="invisible">I feel invisible</button>
+        <button class="fq-option" data-feeling="pressure">I feel pressure</button>
+        <button class="fq-option" data-feeling="lost">I feel lost</button>
+      </div>
+    </div>
+
     <p class="hero-trust" id="hTrust">113K following &nbsp;·&nbsp; No spam &nbsp;·&nbsp; One email</p>
   </div>
 
@@ -296,6 +351,17 @@ footer{border-top:1px solid var(--grey-line);padding:48px 56px;display:flex;just
       <h2 class="s-headline rev d1" style="font-size:clamp(38px,4.5vw,64px);max-width:600px">What VTS actually<br>feels like to use.</h2>
     </div>
 
+    <div class="preview-card rev">
+      <div class="preview-inner" id="emotionalPreview">
+        <div class="preview-line active">He felt the same.</div>
+        <div class="preview-line">They told him he <strong>wasn’t enough.</strong></div>
+        <div class="preview-line">He kept going anyway.</div>
+        <div class="preview-line">So why are <strong>you</strong> stopping?</div>
+        <div class="preview-mini">15-second emotional preview</div>
+        <button class="preview-replay" onclick="playPreview()">Replay</button>
+      </div>
+    </div>
+
     <div class="demo-bento rev">
       <div class="demo-card main">
         <div class="demo-card-slash"></div>
@@ -308,10 +374,10 @@ footer{border-top:1px solid var(--grey-line);padding:48px 56px;display:flex;just
             <div class="cp-tag">VTS · Check in</div>
             <div class="cp-q">What are you carrying<br>right now?</div>
             <div class="cp-opts">
-              <div class="cp-opt active" onclick="pickOpt(this)"><span>Like giving up</span><span class="cp-check">✓</span></div>
-              <div class="cp-opt" onclick="pickOpt(this)"><span>Like I'm not enough</span><span class="cp-check"></span></div>
-              <div class="cp-opt" onclick="pickOpt(this)"><span>Invisible</span><span class="cp-check"></span></div>
-              <div class="cp-opt" onclick="pickOpt(this)"><span>Under pressure</span><span class="cp-check"></span></div>
+              <div class="cp-opt active" data-feeling="lost" onclick="pickOpt(this)"><span>Like giving up</span><span class="cp-check">✓</span></div>
+              <div class="cp-opt" data-feeling="not-enough" onclick="pickOpt(this)"><span>Like I'm not enough</span><span class="cp-check"></span></div>
+              <div class="cp-opt" data-feeling="invisible" onclick="pickOpt(this)"><span>Invisible</span><span class="cp-check"></span></div>
+              <div class="cp-opt" data-feeling="pressure" onclick="pickOpt(this)"><span>Under pressure</span><span class="cp-check"></span></div>
             </div>
           </div>
         </div>
@@ -462,7 +528,7 @@ const cur=document.getElementById('cur'),curT=document.getElementById('curT');
 let mx=0,my=0,tx=0,ty=0;
 document.addEventListener('mousemove',e=>{mx=e.clientX;my=e.clientY;cur.style.left=mx+'px';cur.style.top=my+'px'});
 (function loop(){tx+=(mx-tx)*.1;ty+=(my-ty)*.1;curT.style.left=tx+'px';curT.style.top=ty+'px';requestAnimationFrame(loop)})();
-document.querySelectorAll('a,button,.fr,.stat-card,.demo-card,.nc,.how-card').forEach(el=>{
+document.querySelectorAll('a,button,.fr,.stat-card,.demo-card,.nc,.how-card,.fq-option,.preview-replay').forEach(el=>{
   el.addEventListener('mouseenter',()=>{cur.classList.add('big');curT.classList.add('big')});
   el.addEventListener('mouseleave',()=>{cur.classList.remove('big');curT.classList.remove('big')});
 });
@@ -475,18 +541,21 @@ window.addEventListener('DOMContentLoaded',()=>{
     .to('#hEyebrow',{opacity:1,y:0,duration:.7,ease:'power3.out'},'-=.65')
     .to('#hSub',{opacity:1,y:0,duration:.7,ease:'power3.out'},'-=.5')
     .to('#hHook',{opacity:1,y:0,duration:.6,ease:'power3.out'},'-=.4')
-    .to('#heroBtn',{opacity:1,y:0,duration:.6,ease:'power3.out'},'-=.4')
+    .to('#heroActions',{opacity:1,y:0,duration:.6,ease:'power3.out'},'-=.4')
+    .to('#feelingQuick',{opacity:1,y:0,duration:.6,ease:'power3.out'},'-=.45')
     .to('#hTrust',{opacity:1,duration:.5},'-=.2')
     .to('#hStats',{opacity:1,duration:.6,ease:'power3.out'},'-=.4')
     .to('#scrollInd',{opacity:1,duration:.5},'-=.3');
 });
 
 const hBtn=document.getElementById('heroBtn');
-hBtn.addEventListener('mousemove',e=>{
-  const r=hBtn.getBoundingClientRect();
-  hBtn.style.transform=`translate(${(e.clientX-r.left-r.width/2)*.3}px,${(e.clientY-r.top-r.height/2)*.3}px)`;
-});
-hBtn.addEventListener('mouseleave',()=>hBtn.style.transform='');
+if(hBtn){
+  hBtn.addEventListener('mousemove',e=>{
+    const r=hBtn.getBoundingClientRect();
+    hBtn.style.transform=`translate(${(e.clientX-r.left-r.width/2)*.3}px,${(e.clientY-r.top-r.height/2)*.3}px)`;
+  });
+  hBtn.addEventListener('mouseleave',()=>hBtn.style.transform='');
+}
 
 document.querySelectorAll('.rev').forEach(el=>{
   new IntersectionObserver(entries=>{
@@ -544,6 +613,101 @@ function rotateMirror(i){
     el.style.transform='translateY(0)';
   },300);
 }
+
+
+// ── EMOTIONAL PREVIEW SEQUENCE ──
+let previewTimers=[];
+function playPreview(){
+  previewTimers.forEach(t=>clearTimeout(t));
+  previewTimers=[];
+  const lines=[...document.querySelectorAll('.preview-line')];
+  lines.forEach((line,i)=>{
+    line.classList.remove('active','out');
+    if(i===0) line.classList.add('active');
+  });
+  lines.forEach((line,i)=>{
+    const show=()=>{
+      lines.forEach(l=>{l.classList.remove('active');l.classList.add('out')});
+      line.classList.remove('out');
+      line.classList.add('active');
+    };
+    previewTimers.push(setTimeout(show,i*2200));
+  });
+}
+const previewEl=document.getElementById('emotionalPreview');
+if(previewEl){
+  new IntersectionObserver(entries=>{
+    entries.forEach(e=>{if(e.isIntersecting) playPreview();});
+  },{threshold:.4}).observe(previewEl);
+}
+
+// ── HERO FEELING SELECTOR → DEMO MATCH ──
+const feelingMap={
+  'not-enough':{
+    storyName:"N'Golo Kanté",
+    avatar:"K",
+    headline:'"Too small. Not athletic enough."',
+    text:'Nobody believed he would make it. He heard it for years. What he never did was stop — and became the engine of two Premier League-winning sides.',
+    lesson:'"The ones who doubted him gave him everything he needed."',
+    mirror:'Whose voice do you hear when you tell yourself you are not enough?'
+  },
+  'invisible':{
+    storyName:'Jamie Vardy',
+    avatar:'V',
+    headline:'"Too late. Too small. Too far behind."',
+    text:'He was not chosen early. He was not protected by an academy. He kept working where nobody was watching until the world had no choice.',
+    lesson:'"Being unseen is not the same as being finished."',
+    mirror:'If no one applauded your work for six months, would you still keep building?'
+  },
+  'pressure':{
+    storyName:'Cristiano Ronaldo',
+    avatar:'R',
+    headline:'"Every eye was waiting for him to fail."',
+    text:'The pressure did not disappear. He learned to make it useful. The noise became fuel, not fear.',
+    lesson:'"Pressure is only heavy when you forget who chose this path."',
+    mirror:'Are you afraid of the moment — or afraid of being seen inside it?'
+  },
+  'lost':{
+    storyName:'Sébastien Haller',
+    avatar:'H',
+    headline:'"Football stopped. Life changed."',
+    text:'When everything was taken from him, he had to rebuild more than fitness. He had to rebuild belief.',
+    lesson:'"A comeback starts before anyone else can see it."',
+    mirror:'What part of you is still fighting, even when you think you are done?'
+  }
+};
+
+function applyFeeling(feeling){
+  const data=feelingMap[feeling];
+  if(!data) return;
+
+  const matchingOpt=document.querySelector(`.cp-opt[data-feeling="${feeling}"]`);
+  if(matchingOpt) pickOpt(matchingOpt);
+
+  const av=document.querySelector('.sui-av');
+  const name=document.querySelector('.sui-name');
+  const headline=document.querySelector('.sui-headline');
+  const text=document.querySelector('.sui-text');
+  const lesson=document.querySelector('.sui-lesson');
+  const mirror=document.getElementById('mirrorQ');
+
+  if(av) av.textContent=data.avatar;
+  if(name) name.textContent=data.storyName;
+  if(headline) headline.textContent=data.headline;
+  if(text) text.textContent=data.text;
+  if(lesson) lesson.textContent=data.lesson;
+  if(mirror) mirror.textContent=data.mirror;
+}
+
+document.querySelectorAll('.fq-option').forEach(btn=>{
+  btn.addEventListener('click',()=>{
+    document.querySelectorAll('.fq-option').forEach(b=>b.classList.remove('active'));
+    btn.classList.add('active');
+    applyFeeling(btn.dataset.feeling);
+    document.getElementById('demo')?.scrollIntoView({behavior:'smooth',block:'start'});
+    setTimeout(playPreview,650);
+  });
+});
 
 function submitEmail(){
   const input=document.getElementById('emailInput');
